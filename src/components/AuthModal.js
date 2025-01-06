@@ -1,6 +1,13 @@
-const AuthModal = () => {
+const AuthModal = ({ setShowModal }) => {
+    const handleClick = () => {
+        setShowModal(false)
+    }
+
     return (
-        <div>AuthModal</div>
+        <div className="auth-modal">
+            <div onClick={handleClick}>⦻</div>
+            AUTH MODAL
+        </div>
     )
 }
 export default AuthModal
