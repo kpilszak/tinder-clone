@@ -4,7 +4,7 @@
     font-family: 'Readex Pro', sans-serif;
 }
 
-html {
+html, body {
     margin: 0;
     padding: 0;
 }
@@ -17,7 +17,7 @@ body {
     color: #fff;
     text-transform: uppercase;
     font-size: 15px;
-    background: linear-gradient(45deg, #fe3072, #ff5940);
+    background: linear-gradient(45deg, rgb(254,48,114), rgb(255,89,64));
     padding: 12px 30px;
     border-radius: 30px;
     border: none;
@@ -33,6 +33,16 @@ nav {
     justify-content: space-between;
 }
 
+nav .nav-button {
+    color: rgb(254,48,114);
+    background-color: rgb(255,255,255);
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    margin: 10px;
+}
+
 nav .logo-container {
     width: 170px;
     margin: 15px;
@@ -40,4 +50,15 @@ nav .logo-container {
 
 nav .logo-container .logo {
     width: 100%;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.65) 0%,
+        rgba(0, 0, 0, 0) 100%
+    )
 }
