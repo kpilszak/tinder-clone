@@ -150,7 +150,7 @@ const OnBoarding = () => {
                     </section>
 
                     <section>
-                        <label htmlFor="url">Profile Profile</label>
+                        <label htmlFor="url">Profile Url</label>
                         <input
                             id="url"
                             type="url"
