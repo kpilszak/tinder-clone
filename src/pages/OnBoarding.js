@@ -135,6 +135,30 @@ const OnBoarding = () => {
                             />
                             <label htmlFor="everyone-gender-interest">Everyone</label>
                         </div>
+
+                        <label htmlFor="about">About me</label>
+                        <input
+                            id="about"
+                            type="text"
+                            name="about"
+                            placeholder="I like long walks.."
+                            required={true}
+                            value={""}
+                            onChange={handleChange}
+                        />
+                        <input type="submit" />
+                    </section>
+
+                    <section>
+                        <label htmlFor="url">Profile Profile</label>
+                        <input
+                            id="url"
+                            type="url"
+                            name="url"
+                            required={true}
+                            onChange={handleChange}
+                        />
+                        <div className="photo-container"></div>
                     </section>
                 </form>
 
