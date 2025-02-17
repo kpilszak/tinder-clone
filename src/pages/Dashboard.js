@@ -6,6 +6,8 @@ import axios from 'axios'
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
+    const [genderedUsers, setGenderedUsers] = useState(null)
+    const [lastDirection, setLastDirection] = useState()
     const [cookies, useCookie, removeCookie] = useCookies(['user'])
 
     const userId = cookies.UserId
@@ -21,34 +23,21 @@ const Dashboard = () => {
         }
     }
 
+    const getGenderedUsers = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/gendered-users', {
+                params: { gender: user?.gender_interest }
+            })
+            setGenderedUsers(response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         getUser()
-    }, [])
-
-    const characters = [
-        {
-            name: 'Richard Hendricks',
-            url: 'https://imgur.com/oPj4A8u.jpg'
-        },
-        {
-            name: 'Erlich Bachman',
-            url: 'https://imgur.com/oPj4A8u.jpg'
-        },
-        {
-            name: 'Monica Hall',
-            url: 'https://imgur.com/oPj4A8u.jpg'
-        },
-        {
-            name: 'Jared Dunn',
-            url: 'https://imgur.com/oPj4A8u.jpg'
-        },
-        {
-            name: 'Dinesh Chugtai',
-            url: 'https://imgur.com/oPj4A8u.jpg'
-        }
-    ]
-
-    const [lastDirection, setLastDirection] = useState()
+        getGenderedUsers()
+    }, [user, genderedUsers])
 
     const swiped = (direction, nameToDelete) => {
         console.log('removing: ' + nameToDelete)
@@ -66,14 +55,14 @@ const Dashboard = () => {
                     <ChatContainer user={user} />
                     <div className="swipe-container">
                         <div className="card-container">
-                            {characters.map((character) =>
+                            {genderedUsers?.map((genderedUser) =>
                                 <TinderCard
                                     className='swipe'
-                                    key={character.name}
-                                    onSwipe={(dir) => swiped(dir, character.name)}
-                                    onCardLeftScreen={() => outOfFrame(character.name)}>
-                                    <div style={{ backgroundImage: 'url(' + character.url + ')' }} className='card'>
-                                        <h3>{character.name}</h3>
+                                    key={genderedUser.first_name}
+                                    onSwipe={(dir) => swiped(dir, genderedUser.first_name)}
+                                    onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}>
+                                    <div style={{ backgroundImage: 'url(' + genderedUser.url + ')' }} className='card'>
+                                        <h3>{genderedUser.first_name}</h3>
                                     </div>
                                 </TinderCard>
                             )}
