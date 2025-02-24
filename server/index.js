@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const cors = require('cors')
 const bcrypt = require('bcrypt')
 
-const uri = 'mongodb+srv://kpilszak:@cluster0.lla0p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+const uri = 'mongodb+srv://kpilszak:DnbURmdUBatt0pBw@cluster0.lla0p.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
 
 const app = express()
 app.use(cors())
@@ -55,7 +55,7 @@ app.post('/signup', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const client = new MongoClient(uri)
-    const { email, password } = req.body 
+    const { email, password } = req.body
 
     try {
         await client.connect()
@@ -115,7 +115,7 @@ app.get('/users', async (req, res) => {
         const foundUsers = await users.aggregate(pipeline).toArray()
         res.send(foundUsers)
     } finally {
-        await client.close() 
+        await client.close()
     }
 })
 
@@ -186,6 +186,27 @@ app.put('/addmatch', async (req, res) => {
 
         const user = await users.updateOne(query, updateDocument)
         res.send(user)
+    } finally {
+        await client.close()
+    }
+})
+
+app.get('/messages', async (req, res) => {
+    const client = new MongoClient(uri)
+    const { userId, correspondingUserId } = req.query
+    
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const messages = database.collection('messages')
+
+        const query = {
+            from_userId: userId, to_userId: correspondingUserId
+        }
+        
+        const foundMessages = await messages.find(query).toArray()
+        
+        res.send(foundMessages)
     } finally {
         await client.close()
     }
