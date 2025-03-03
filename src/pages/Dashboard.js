@@ -36,8 +36,13 @@ const Dashboard = () => {
 
     useEffect(() => {
         getUser()
-        getGenderedUsers()
-    }, [user, genderedUsers])
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            getGenderedUsers()
+        }
+    }, [user])
 
     const updateMatches = async (matchedUserId) => {
         try {
@@ -49,7 +54,7 @@ const Dashboard = () => {
         } catch (err) {
             console.log(err)
         }
-    } 
+    }
 
     const swiped = (direction, swipedUser) => {
         if (direction === 'right') {
